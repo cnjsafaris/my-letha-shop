@@ -51,11 +51,17 @@ export function AddProductDialog({ open, onOpenChange, categories }: AddProductD
       }
 
       const productData = {
-        ...formData,
+        name: formData.name.trim(),
+        description: formData.description.trim() || null,
         price: Number.parseFloat(formData.price),
         stock_quantity: Number.parseInt(formData.stock_quantity) || 0,
-        image_url: formData.image_url || "/placeholder.svg?height=400&width=400&text=Leather+Product",
+        image_url: formData.image_url.trim() || "/placeholder.svg?height=400&width=400&text=Leather+Product",
         category_id: formData.category_id || null,
+        sku: formData.sku.trim() || null,
+        material: formData.material.trim() || null,
+        color: formData.color.trim() || null,
+        is_featured: formData.is_featured,
+        is_active: formData.is_active,
       }
 
       const { error } = await supabase.from("products").insert(productData)
