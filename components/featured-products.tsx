@@ -24,12 +24,12 @@ export function FeaturedProducts() {
   const [loading, setLoading] = useState(true)
   const { toast } = useToast()
   const { addToCart } = useCart()
-  const supabase = createClient()
 
   useEffect(() => {
     async function fetchFeaturedProducts() {
       try {
         console.log("[v0] Fetching featured products...")
+        const supabase = createClient()
 
         const { data, error } = await supabase
           .from("products")
@@ -87,7 +87,7 @@ export function FeaturedProducts() {
     }
 
     fetchFeaturedProducts()
-  }, [supabase, toast])
+  }, [toast])
 
   const handleAddToCart = async (productId: string) => {
     await addToCart(productId)
