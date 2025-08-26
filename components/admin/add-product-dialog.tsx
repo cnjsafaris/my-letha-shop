@@ -19,15 +19,6 @@ interface AddProductDialogProps {
   categories: any[]
 }
 
-function generateSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim()
-}
-
 export function AddProductDialog({ open, onOpenChange, categories }: AddProductDialogProps) {
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -59,15 +50,15 @@ export function AddProductDialog({ open, onOpenChange, categories }: AddProductD
         throw new Error("Valid price is required")
       }
 
-      const slug = generateSlug(formData.name)
-
-      const { error } = await supabase.from("products").insert({
+      const productData = {
         ...formData,
-        slug, // Added slug field
         price: Number.parseFloat(formData.price),
         stock_quantity: Number.parseInt(formData.stock_quantity) || 0,
         image_url: formData.image_url || "/placeholder.svg?height=400&width=400&text=Leather+Product",
-      })
+        category_id: formData.category_id || null,
+      }
+
+      const { error } = await supabase.from("products").insert(productData)
 
       if (error) {
         console.error("[v0] Product insert error:", error)

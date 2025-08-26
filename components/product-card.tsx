@@ -5,19 +5,7 @@ import Link from "next/link"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-
-interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  image_url: string
-  category: {
-    name: string
-    is_luxury: boolean
-  }
-  is_featured: boolean
-}
+import type { Product } from "@/lib/types"
 
 interface ProductCardProps {
   product: Product
@@ -37,7 +25,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
         {product.is_featured && (
           <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground">Featured</Badge>
         )}
-        {product.category.is_luxury && (
+        {product.category?.is_luxury && (
           <Badge className="absolute top-2 right-2 bg-secondary text-secondary-foreground">Luxury</Badge>
         )}
       </div>
@@ -47,7 +35,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           <p className="text-sm text-muted-foreground line-clamp-2">{product.description}</p>
           <div className="flex items-center justify-between">
             <span className="text-lg font-bold text-primary">${product.price.toFixed(2)}</span>
-            <span className="text-xs text-muted-foreground">{product.category.name}</span>
+            <span className="text-xs text-muted-foreground">{product.category?.name || 'Uncategorized'}</span>
           </div>
         </div>
       </CardContent>

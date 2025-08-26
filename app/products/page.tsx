@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Search, Filter } from "lucide-react"
+import { useCart } from "@/lib/cart-context"
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([])
@@ -98,13 +99,10 @@ export default function ProductsPage() {
     setFilteredProducts(filtered)
   }, [products, searchTerm, selectedCategory, sortBy])
 
+  const { addToCart } = useCart()
+
   const handleAddToCart = async (productId: string) => {
-    try {
-      console.log("[v0] Adding product to cart:", productId)
-      // Add to cart logic will be implemented here
-    } catch (error) {
-      console.error("[v0] Error adding to cart:", error)
-    }
+    await addToCart(productId)
   }
 
   if (isLoading) {

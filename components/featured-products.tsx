@@ -5,19 +5,7 @@ import { createClient } from "@/lib/supabase/client"
 import { ProductCard } from "./product-card"
 import { useToast } from "@/hooks/use-toast"
 import { useCart } from "@/lib/cart-context"
-
-interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  image_url: string
-  category: {
-    name: string
-    is_luxury: boolean
-  }
-  is_featured: boolean
-}
+import type { Product } from "@/lib/types"
 
 export function FeaturedProducts() {
   const [products, setProducts] = useState<Product[]>([])
