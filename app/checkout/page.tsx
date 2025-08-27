@@ -152,8 +152,10 @@ export default function CheckoutPage() {
       const orderItems = items.map((item) => ({
         order_id: order.id,
         product_id: item.product_id,
+        product_name: item.product?.name || "Unknown Product",
+        product_price: item.product?.price || 0,
         quantity: item.quantity,
-        price: item.product?.price || 0,
+        subtotal: (item.product?.price || 0) * item.quantity,
       }))
 
       const { error: itemsError } = await supabase.from("order_items").insert(orderItems)
