@@ -128,7 +128,6 @@ export default function CheckoutPage() {
           total_amount: totalPrice,
           status: "pending",
           payment_method: "cash_on_delivery",
-          payment_status: "pending",
           shipping_address: {
             street: shippingInfo.street,
             city: shippingInfo.city,
